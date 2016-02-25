@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Trollie</string>
+    <string name="action_settings">Settings</string>
+    <string name="facebook_app_id">237534779915288</string>
+    <string name="action_show_access_token_title">Print Access Token</string>
+    <string name="title_activity_access_token">AccessTokenActivity</string>
+    <string name="title_activity_show_access_token">ShowAccessTokenActivity</string>
+</resources>
