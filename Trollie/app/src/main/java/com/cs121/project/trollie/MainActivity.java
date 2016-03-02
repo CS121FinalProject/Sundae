@@ -3,6 +3,7 @@ package com.cs121.project.trollie;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -15,9 +16,14 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -64,6 +70,34 @@ public class MainActivity extends AppCompatActivity {
                 Glide.with(MainActivity.this)
                         .load(profileImgUrl)
                         .into(profileImgView);
+
+                // Calling Facebook Graph API for user info
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(
+                                    JSONObject object,
+                                    GraphResponse response) {
+                                // Application code
+                                try {
+                                    Log.i("OBJ", object.toString());
+                                    String name = object.getString("name");
+                                    Log.i("FB Name: ", name);
+                                    String gender = object.getString("gender");
+                                    Log.i("FB Gender: ", gender);
+                                    //String rel_status = object.getString("relationship_status");
+                                    //Log.i("FB Relation: ", rel_status);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,gender,birthday,link");
+                request.setParameters(parameters);
+                request.executeAsync();
             }
 
             @Override
