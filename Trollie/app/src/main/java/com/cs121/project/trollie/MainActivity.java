@@ -4,10 +4,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import com.bumptech.glide.Glide;
 import com.facebook.AccessToken;
@@ -27,6 +34,7 @@ import org.json.JSONObject;
 
 
 public class MainActivity extends AppCompatActivity {
+    public static String LOG_TAG = "MY LOG TAG:";
     private CallbackManager callbackManager;
     private TextView info;
     private ImageView profileImgView;
@@ -34,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
     private PrefUtil prefUtil;
     private IntentUtil intentUtil;
+
+    private MyAdapter aa;
+    private ArrayList<ListElement> aList;
 
 
     @Override
@@ -49,8 +60,11 @@ public class MainActivity extends AppCompatActivity {
         intentUtil = new IntentUtil(this);
 
         info = (TextView) findViewById(R.id.info);
-        profileImgView = (ImageView) findViewById(R.id.profile_img);
+       // profileImgView = (ImageView) findViewById(R.id.profile_img);
         loginButton = (LoginButton) findViewById(R.id.login_button);
+
+        // Ask user permission to access birthday
+        //loginButton.setReadPermissions("user_birthday");
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -66,10 +80,9 @@ public class MainActivity extends AppCompatActivity {
 
                 String profileImgUrl = "https://graph.facebook.com/" + userId + "/picture?type=large";
 
-
-                Glide.with(MainActivity.this)
-                        .load(profileImgUrl)
-                        .into(profileImgView);
+//                Glide.with(MainActivity.this)
+//                        .load(profileImgUrl)
+//                        .into(profileImgView);
 
                 // Calling Facebook Graph API for user info
                 GraphRequest request = GraphRequest.newMeRequest(
@@ -95,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,gender,birthday,link");
+                parameters.putString("fields", "id,name,gender,age_range,link");
                 request.setParameters(parameters);
                 request.executeAsync();
             }
@@ -131,12 +144,34 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void getMessages(View v) {
+        aList.clear();
+        aList.add(new ListElement("99 Bottles", "Santa Cruz", "right"));
+        aList.add(new ListElement("99 Bottles", "Santa Cruz", "right"));
+        aList.add(new ListElement("99 Bottles", "Santa Cruz", "right"));
+        Log.i(LOG_TAG, "RIGHT BEFORE aa.notifyData()");
+        aa.notifyDataSetChanged();
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         deleteAccessToken();
         Profile profile = Profile.getCurrentProfile();
         info.setText(message(profile));
+
+        // Initialize List View
+        Log.i(LOG_TAG, "test1");
+        aList = new ArrayList<ListElement>();
+        Log.i(LOG_TAG, "test2");
+        aa = new MyAdapter(this, R.layout.list_element, aList);
+        Log.i(LOG_TAG, "test3");
+        ListView myListView = (ListView) findViewById(R.id.listView);
+        Log.i(LOG_TAG, "test4");
+        myListView.setAdapter(aa);
+        Log.i(LOG_TAG, "test5");
+        aa.notifyDataSetChanged();
+        Log.i(LOG_TAG, "test6");
     }
 
 
@@ -170,8 +205,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clearUserArea() {
-        info.setText("");
-        profileImgView.setImageDrawable(null);
+//        info.setText("");
+//        profileImgView.setImageDrawable(null);
     }
 
 }
