@@ -30,7 +30,10 @@ import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,6 +51,12 @@ public class MainActivity extends AppCompatActivity {
 
     String name;
     String gender;
+    String maleCount99;
+    String femaleCount99;
+    String maleCountRosies;
+    String femaleCountRosies;
+    String maleCountPono;
+    String femaleCountPono;
 
     private MyAdapter aa;
     private ArrayList<ListElement> aList;
@@ -167,12 +176,163 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("user_gender", gender);
         editor.commit();
 
+        final Firebase genRef99 = new Firebase("https://glaring-fire-674.firebaseio.com/99Bottles");
+        String male_count_99 = obtainMaleCount99(genRef99);
+        String female_count_99 = obtainFemaleCount99(genRef99);
+
+        final Firebase genRefPono = new Firebase("https://glaring-fire-674.firebaseio.com/Pono Hawaiian Grill");
+        String male_count_Pono = obtainMaleCountPono(genRefPono);
+        String female_count_Pono = obtainFemaleCountPono(genRefPono);
+
+        final Firebase genRefRosies = new Firebase("https://glaring-fire-674.firebaseio.com/Rosie McCanns");
+        String male_count_Rosies = obtainMaleCountRosies(genRefRosies);
+        String female_count_Rosies = obtainFemaleCountRosies(genRefRosies);
+
         aList.clear();
-        aList.add(new ListElement("99 Bottles", "Santa Cruz", "right"));
-        aList.add(new ListElement("Rosie McCann's", "Santa Cruz", "right"));
-        aList.add(new ListElement("Pono Hawaiian Grill", "Santa Cruz", "right"));
+        aList.add(new ListElement("99 Bottles", male_count_99, female_count_99));
+        aList.add(new ListElement("Rosie McCann's", male_count_Rosies, female_count_Rosies));
+        aList.add(new ListElement("Pono Hawaiian Grill", male_count_Pono, female_count_Pono));
         Log.i(LOG_TAG, "RIGHT BEFORE aa.notifyData()");
         aa.notifyDataSetChanged();
+    }
+
+    // Returns the male count for 99 Bottles
+    public String obtainMaleCount99(Firebase ref){
+
+        ref.child("Male count").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Firebase thisOne = new Firebase("https://glaring-fire-674.firebaseio.com/99Bottles");
+                Log.i(LOG_TAG, snapshot.getValue().toString());  //prints "Do you have data? You'll love Firebase."
+                maleCount99 = snapshot.getValue().toString();
+//                int i = Integer.parseInt(snapshot.getValue().toString());
+//                //String j = String.valueOf(i + 1);
+////                thisOne.child("Male count").setValue(i + 1);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError error) {
+            }
+
+        });
+
+        return (maleCount99);
+    }
+
+    // Returns the female count for 99 Bottles
+    public String obtainFemaleCount99(Firebase ref){
+        ref.child("Female count").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Firebase thisOne = new Firebase("https://glaring-fire-674.firebaseio.com/99Bottles");
+                Log.i(LOG_TAG, snapshot.getValue().toString());  //prints "Do you have data? You'll love Firebase."
+                femaleCount99 = snapshot.getValue().toString();
+//                int i = Integer.parseInt(snapshot.getValue().toString());
+//                //String j = String.valueOf(i + 1);
+//                thisOne.child("Female count").setValue(i + 1 );
+            }
+
+            @Override
+            public void onCancelled(FirebaseError error) {
+            }
+
+        });
+
+        return (femaleCount99);
+    }
+
+    public String obtainMaleCountRosies(Firebase ref){
+        ref.child("Male count").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Firebase thisOne = new Firebase("https://glaring-fire-674.firebaseio.com/Rosie McCanns");
+                Log.i(LOG_TAG, snapshot.getValue().toString());  //prints "Do you have data? You'll love Firebase."
+                maleCountRosies = snapshot.getValue().toString();
+//                int i = Integer.parseInt(snapshot.getValue().toString());
+//                //String j = String.valueOf(i + 1);
+//                thisOne.child("Male count").setValue(i + 1);
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError error) {
+            }
+
+        });
+
+        return (maleCountRosies);
+    }
+
+    public String obtainFemaleCountRosies(Firebase ref){
+        ref.child("Female count").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Firebase thisOne = new Firebase("https://glaring-fire-674.firebaseio.com/Rosie McCanns");
+                Log.i(LOG_TAG, snapshot.getValue().toString());  //prints "Do you have data? You'll love Firebase."
+                femaleCountRosies = snapshot.getValue().toString();
+//                int i = Integer.parseInt(snapshot.getValue().toString());
+//                //String j = String.valueOf(i + 1);
+//                thisOne.child("Female count").setValue(i + 1 );
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError error) {
+            }
+
+        });
+
+        return (femaleCountRosies);
+    }
+
+    //
+    public String obtainMaleCountPono(Firebase ref){
+        ref.child("Male count").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Firebase thisOne = new Firebase("https://glaring-fire-674.firebaseio.com/Pono Hawaiian Grill");
+                Log.i(LOG_TAG, snapshot.getValue().toString());  //prints "Do you have data? You'll love Firebase."
+                maleCountPono = snapshot.getValue().toString();
+//                int i = Integer.parseInt(snapshot.getValue().toString());
+//                //String j = String.valueOf(i + 1);
+//                thisOne.child("Male count").setValue(i + 1);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError error) {
+            }
+
+        });
+
+        return (maleCountPono);
+    }
+
+    public String obtainFemaleCountPono(Firebase ref){
+        ref.child("Female count").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Firebase thisOne = new Firebase("https://glaring-fire-674.firebaseio.com/Pono Hawaiian Grill");
+                Log.i(LOG_TAG, snapshot.getValue().toString());  //prints "Do you have data? You'll love Firebase."
+                femaleCountPono = snapshot.getValue().toString();
+//                int i = Integer.parseInt(snapshot.getValue().toString());
+//                //String j = String.valueOf(i + 1);
+//                thisOne.child("Female count").setValue(i + 1 );
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError error) {
+            }
+
+        });
+
+        return (femaleCountPono);
     }
 
     @Override
@@ -221,7 +381,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clearUserArea() {
-//        info.setText("");
+        info.setText("You've Successfully Logge Out");
 //        profileImgView.setImageDrawable(null);
     }
 

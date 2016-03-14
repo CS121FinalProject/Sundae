@@ -34,6 +34,52 @@
             android:fontFamily="sans-serif-light"
             android:textAppearance="?android:attr/textAppearanceLarge"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="130dp"
+                android:id="@+id/maleIcon"
+                android:src="@drawable/male_user_grey"
+                android:scaleType="fitCenter"/>
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/maleCount"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="140dp"
+                android:text="10"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="130dp"
+                android:id="@+id/femaleIcon"
+                android:src="@drawable/female_user_grey"
+                android:scaleType="fitCenter"/>
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/femaleCount"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="140dp"
+                android:text="10"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        </LinearLayout>
+
+
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+
         <Button
             android:id="@+id/checkInBtn"
             android:layout_width="100dp"
