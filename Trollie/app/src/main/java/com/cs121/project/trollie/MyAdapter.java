@@ -53,11 +53,11 @@ public class MyAdapter extends ArrayAdapter<ListElement> {
 
         // Fills in the view.
         TextView tv = (TextView) newView.findViewById(R.id.info_text);
-        TextView b = (TextView) newView.findViewById(R.id.textView2);
+//        TextView b = (TextView) newView.findViewById(R.id.textView2);
         ImageView iv = (ImageView) newView.findViewById(R.id.location_img);
         Log.i(LOG_TAG, "TEST");
         tv.setText(w.message);
-        b.setText(w.nickname);
+//        b.setText(w.nickname);
         if ( (w.message).equals("Rosie McCann's") ) {
             iv.setImageResource(R.drawable.rosiemccannes);
         }
@@ -84,19 +84,19 @@ public class MyAdapter extends ArrayAdapter<ListElement> {
 //        }
 
 
-        // Sets a listener for the button, and a tag for the button as well.
-        b.setTag(new Integer(position));
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Reacts to a button press.
-                // Gets the integer tag of the button.
-                String s = v.getTag().toString();
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, s, duration);
-                toast.show();
-            }
-        });
+//        // Sets a listener for the button, and a tag for the button as well.
+//        b.setTag(new Integer(position));
+//        b.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Reacts to a button press.
+//                // Gets the integer tag of the button.
+//                String s = v.getTag().toString();
+//                int duration = Toast.LENGTH_SHORT;
+//                Toast toast = Toast.makeText(context, s, duration);
+//                toast.show();
+//            }
+//        });
 
         // Set a listener for the whole list item.
         newView.setTag(w.message);
