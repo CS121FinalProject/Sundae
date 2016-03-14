@@ -1,5 +1,6 @@
 package com.cs121.project.trollie;
 
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ListView;
+import android.content.SharedPreferences;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,8 +45,14 @@ public class MainActivity extends AppCompatActivity {
     private PrefUtil prefUtil;
     private IntentUtil intentUtil;
 
+    String name;
+    String gender;
+
     private MyAdapter aa;
     private ArrayList<ListElement> aList;
+
+    // Global SharedPreferences instance
+    SharedPreferences settings;
 
 
     @Override
@@ -95,10 +103,12 @@ public class MainActivity extends AppCompatActivity {
                                 // Application code
                                 try {
                                     Log.i("OBJ", object.toString());
-                                    String name = object.getString("name");
+                                    name = object.getString("name");
                                     Log.i("FB Name: ", name);
-                                    String gender = object.getString("gender");
+                                    gender = object.getString("gender");
                                     Log.i("FB Gender: ", gender);
+                                    String age = object.getString("age_range");
+                                    Log.i("FB Age:", age);
                                     //String rel_status = object.getString("relationship_status");
                                     //Log.i("FB Relation: ", rel_status);
                                 } catch (JSONException e) {
@@ -145,6 +155,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void displayInfo(View v) {
+        // Store user's information in SP so we can access it in MyAdapter
+        settings = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("user_name", name);
+        editor.commit();
+        editor.putString("user_gender", gender);
+        editor.commit();
+
         aList.clear();
         aList.add(new ListElement("99 Bottles", "Santa Cruz", "right"));
         aList.add(new ListElement("Rosie McCann's", "Santa Cruz", "right"));

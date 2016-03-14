@@ -1,6 +1,8 @@
 package com.cs121.project.trollie;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
+import android.app.Fragment;
 
 import java.util.List;
 
@@ -35,6 +38,13 @@ public class MyAdapter extends ArrayAdapter<ListElement> {
     public View getView(int position, View convertView, ViewGroup parent) {
         LinearLayout newView;
 
+        // Get users information from MainActivity
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+        String user_name = settings.getString("user_name", null);
+        String user_gender = settings.getString("user_gender", null);
+        Log.i(LOG_TAG, user_name);
+        Log.i(LOG_TAG, user_gender);
+
         ListElement w = getItem(position);
 
         // Inflate a new view if necessary.
@@ -47,45 +57,23 @@ public class MyAdapter extends ArrayAdapter<ListElement> {
             newView = (LinearLayout) convertView;
         }
 
-//        LinearLayout.LayoutParams messageParams = new LinearLayout.LayoutParams(650, ViewGroup.LayoutParams.WRAP_CONTENT);
-//        LinearLayout.LayoutParams nicknameParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-
         // Fills in the view.
         TextView tv = (TextView) newView.findViewById(R.id.info_text);
         TextView b = (Button) newView.findViewById(R.id.checkInBtn);
         ImageView iv = (ImageView) newView.findViewById(R.id.location_img);
         Log.i(LOG_TAG, "TEST");
         tv.setText(w.message);
-//        b.setText(w.nickname);
-        if ( (w.message).equals("Rosie McCann's") ) {
-            iv.setImageResource(R.drawable.rosiemccannes);
-        }
+
+        // Set images at the top of each card
         if ( (w.message).equals("99 Bottles") ) {
             iv.setImageResource(R.drawable.ninetynine_logo1);
+        }
+        if ( (w.message).equals("Rosie McCann's") ) {
+            iv.setImageResource(R.drawable.rosiemccannes);
         }
         if ( (w.message).equals("Pono Hawaiian Grill") ) {
             iv.setImageResource(R.drawable.pono_logo);
         }
-
-        // Pull message box LEFT or RIGHT
-//        if ( (w.gravity).equals("left") ) {
-////            tv.setBackgroundColor(0xffcccccc);
-////            messageParams.gravity = Gravity.LEFT;
-////            nicknameParams.gravity = Gravity.LEFT;
-////            tv.setLayoutParams(messageParams);
-////            b.setLayoutParams(nicknameParams);
-//
-//        }
-//        else {
-//            tv.setBackgroundColor(0xff0000ff);
-//            tv.setTextColor(0xffffffff);
-////            messageParams.gravity = Gravity.RIGHT;
-////            nicknameParams.gravity = Gravity.RIGHT;
-////            tv.setLayoutParams(messageParams);
-////            b.setLayoutParams(nicknameParams);
-//        }
-
 
         // Sets a listener for the button, and a tag for the button as well.
         b.setTag(new Integer(position));
@@ -95,6 +83,24 @@ public class MyAdapter extends ArrayAdapter<ListElement> {
                 // Reacts to a button press.
                 // Gets the integer tag of the button.
                 String s = v.getTag().toString();
+
+                // If user chooses to check-in at 99 Bottles
+                if ( (s).equals("0") ) {
+                    Log.i(LOG_TAG, s);
+                    // Update 99 Bottles Table
+                }
+
+                // If user chooses to check-in at Rosie McCann's
+                if ( (s).equals("1") ) {
+                    Log.i(LOG_TAG, s);
+                    // Update Rosie McCann's Table
+                }
+
+                // If user chooses to check-in at Pono Hawaiian Grill
+                if ( (s).equals("2") ) {
+                    Log.i(LOG_TAG, s);
+                    // Update Pono Hawaiian Grill Table
+                }
                 int duration = Toast.LENGTH_SHORT;
                 Toast toast = Toast.makeText(context, s, duration);
                 toast.show();
