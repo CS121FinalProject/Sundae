@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,34 +47,41 @@ public class MyAdapter extends ArrayAdapter<ListElement> {
             newView = (LinearLayout) convertView;
         }
 
-        LinearLayout.LayoutParams messageParams = new LinearLayout.LayoutParams(650, ViewGroup.LayoutParams.WRAP_CONTENT);
-        LinearLayout.LayoutParams nicknameParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        LinearLayout.LayoutParams messageParams = new LinearLayout.LayoutParams(650, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        LinearLayout.LayoutParams nicknameParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
 
         // Fills in the view.
-        TextView tv = (TextView) newView.findViewById(R.id.itemText);
+        TextView tv = (TextView) newView.findViewById(R.id.info_text);
         TextView b = (TextView) newView.findViewById(R.id.textView2);
+        ImageView iv = (ImageView) newView.findViewById(R.id.location_img);
         Log.i(LOG_TAG, "TEST");
         tv.setText(w.message);
         b.setText(w.nickname);
+        if ( (w.message).equals("Rosie McCann's") ) {
+            iv.setImageResource(R.drawable.rosiemccannes);
+        }
+        if ( (w.message).equals("99 Bottles") ) {
+            iv.setImageResource(R.drawable.ninetynine_logo1);
+        }
 
         // Pull message box LEFT or RIGHT
-        if ( (w.gravity).equals("left") ) {
-            tv.setBackgroundColor(0xffcccccc);
-            messageParams.gravity = Gravity.LEFT;
-            nicknameParams.gravity = Gravity.LEFT;
-            tv.setLayoutParams(messageParams);
-            b.setLayoutParams(nicknameParams);
-
-        }
-        else {
-            tv.setBackgroundColor(0xff0000ff);
-            tv.setTextColor(0xffffffff);
-            messageParams.gravity = Gravity.RIGHT;
-            nicknameParams.gravity = Gravity.RIGHT;
-            tv.setLayoutParams(messageParams);
-            b.setLayoutParams(nicknameParams);
-        }
+//        if ( (w.gravity).equals("left") ) {
+////            tv.setBackgroundColor(0xffcccccc);
+////            messageParams.gravity = Gravity.LEFT;
+////            nicknameParams.gravity = Gravity.LEFT;
+////            tv.setLayoutParams(messageParams);
+////            b.setLayoutParams(nicknameParams);
+//
+//        }
+//        else {
+//            tv.setBackgroundColor(0xff0000ff);
+//            tv.setTextColor(0xffffffff);
+////            messageParams.gravity = Gravity.RIGHT;
+////            nicknameParams.gravity = Gravity.RIGHT;
+////            tv.setLayoutParams(messageParams);
+////            b.setLayoutParams(nicknameParams);
+//        }
 
 
         // Sets a listener for the button, and a tag for the button as well.

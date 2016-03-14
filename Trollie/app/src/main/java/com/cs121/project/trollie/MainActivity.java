@@ -144,11 +144,11 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void getMessages(View v) {
+    public void displayInfo(View v) {
         aList.clear();
         aList.add(new ListElement("99 Bottles", "Santa Cruz", "right"));
-        aList.add(new ListElement("99 Bottles", "Santa Cruz", "right"));
-        aList.add(new ListElement("99 Bottles", "Santa Cruz", "right"));
+        aList.add(new ListElement("Rosie McCann's", "Santa Cruz", "right"));
+        aList.add(new ListElement("Pono's Hawaiian Grill", "Santa Cruz", "right"));
         Log.i(LOG_TAG, "RIGHT BEFORE aa.notifyData()");
         aa.notifyDataSetChanged();
     }
@@ -161,17 +161,11 @@ public class MainActivity extends AppCompatActivity {
         info.setText(message(profile));
 
         // Initialize List View
-        Log.i(LOG_TAG, "test1");
         aList = new ArrayList<ListElement>();
-        Log.i(LOG_TAG, "test2");
         aa = new MyAdapter(this, R.layout.list_element, aList);
-        Log.i(LOG_TAG, "test3");
         ListView myListView = (ListView) findViewById(R.id.listView);
-        Log.i(LOG_TAG, "test4");
         myListView.setAdapter(aa);
-        Log.i(LOG_TAG, "test5");
         aa.notifyDataSetChanged();
-        Log.i(LOG_TAG, "test6");
     }
 
 
