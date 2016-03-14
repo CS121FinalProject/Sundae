@@ -34,9 +34,9 @@
             android:text="Hello"/>
 
         <Button
+            android:id="@+id/checkInBtn"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:onClick="updateLocation"
             android:layout_gravity="center|bottom"
             android:text="Check-In"/>
 
