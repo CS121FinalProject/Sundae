@@ -64,6 +64,9 @@ public class MyAdapter extends ArrayAdapter<ListElement> {
         if ( (w.message).equals("99 Bottles") ) {
             iv.setImageResource(R.drawable.ninetynine_logo1);
         }
+        if ( (w.message).equals("Pono Hawaiian Grill") ) {
+            iv.setImageResource(R.drawable.pono_logo);
+        }
 
         // Pull message box LEFT or RIGHT
 //        if ( (w.gravity).equals("left") ) {

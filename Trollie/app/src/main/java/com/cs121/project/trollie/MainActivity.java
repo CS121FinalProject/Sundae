@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
         aList.clear();
         aList.add(new ListElement("99 Bottles", "Santa Cruz", "right"));
         aList.add(new ListElement("Rosie McCann's", "Santa Cruz", "right"));
-        aList.add(new ListElement("Pono's Hawaiian Grill", "Santa Cruz", "right"));
+        aList.add(new ListElement("Pono Hawaiian Grill", "Santa Cruz", "right"));
         Log.i(LOG_TAG, "RIGHT BEFORE aa.notifyData()");
         aa.notifyDataSetChanged();
     }
