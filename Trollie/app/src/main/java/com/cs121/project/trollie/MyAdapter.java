@@ -3,7 +3,6 @@ package com.cs121.project.trollie;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
-import android.app.Fragment;
+
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.util.List;
 
@@ -38,10 +41,13 @@ public class MyAdapter extends ArrayAdapter<ListElement> {
     public View getView(int position, View convertView, ViewGroup parent) {
         LinearLayout newView;
 
+        //Must initialize Firebase library
+        Firebase.setAndroidContext(context);
+
         // Get users information from MainActivity
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         String user_name = settings.getString("user_name", null);
-        String user_gender = settings.getString("user_gender", null);
+        final String user_gender = settings.getString("user_gender", null);
         Log.i(LOG_TAG, user_name);
         Log.i(LOG_TAG, user_gender);
 
@@ -75,7 +81,7 @@ public class MyAdapter extends ArrayAdapter<ListElement> {
             iv.setImageResource(R.drawable.pono_logo);
         }
 
-        // Sets a listener for the button, and a tag for the button as well.
+        // Sets a listener for Check-In button
         b.setTag(new Integer(position));
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +93,21 @@ public class MyAdapter extends ArrayAdapter<ListElement> {
                 // If user chooses to check-in at 99 Bottles
                 if ( (s).equals("0") ) {
                     Log.i(LOG_TAG, s);
+
                     // Update 99 Bottles Table
+                    final Firebase genRef = new Firebase("https://glaring-fire-674.firebaseio.com/99Bottles");
+
+                    if (user_gender != null) {
+                        if ( (user_gender).equals("male") ) {
+                            // Update the 'male' count for 99 Bottles
+                            obtainMaleCount99(genRef);
+                        }
+                        else if ( (user_gender).equals("female") ) {
+                            // Update the female count for 99 Bottles
+                            obtainFemaleCount99(genRef);
+                        }
+                    }
+
                 }
 
                 // If user chooses to check-in at Rosie McCann's
@@ -120,5 +140,47 @@ public class MyAdapter extends ArrayAdapter<ListElement> {
         });
 
         return newView;
+
+    } // End of getView()
+
+    public void obtainMaleCount99(Firebase ref){
+        ref.child("Male count").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Firebase thisOne = new Firebase("https://glaring-fire-674.firebaseio.com/99Bottles");
+                Log.i(LOG_TAG, snapshot.getValue().toString());  //prints "Do you have data? You'll love Firebase."
+                int i = Integer.parseInt(snapshot.getValue().toString());
+                //String j = String.valueOf(i + 1);
+                thisOne.child("Male count").setValue(i + 1);
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError error) {
+            }
+
+        });
     }
+
+    public void obtainFemaleCount99(Firebase ref){
+        ref.child("Female count").addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Firebase thisOne = new Firebase("https://glaring-fire-674.firebaseio.com/99Bottles");
+                Log.i(LOG_TAG, snapshot.getValue().toString());  //prints "Do you have data? You'll love Firebase."
+                int i = Integer.parseInt(snapshot.getValue().toString());
+                //String j = String.valueOf(i + 1);
+                thisOne.child("Female count").setValue(i + 1 );
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError error) {
+            }
+
+        });
+    }
+
 }
