@@ -20,6 +20,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 /**
@@ -68,6 +70,9 @@ public class MyAdapter extends ArrayAdapter<ListElement> {
         TextView tv = (TextView) newView.findViewById(R.id.info_text);
         TextView mc = (TextView) newView.findViewById(R.id.maleCount);
         TextView fc = (TextView) newView.findViewById(R.id.femaleCount);
+        TextView al = (TextView) newView.findViewById(R.id.ageLow);
+        TextView am = (TextView) newView.findViewById(R.id.ageMed);
+        TextView ah = (TextView) newView.findViewById(R.id.ageHigh);
         TextView b = (Button) newView.findViewById(R.id.checkInBtn);
         ImageView iv = (ImageView) newView.findViewById(R.id.location_img);
         ImageView mi = (ImageView) newView.findViewById(R.id.maleIcon);
@@ -86,6 +91,9 @@ public class MyAdapter extends ArrayAdapter<ListElement> {
         tv.setText(w.message);
         mc.setText(w.nickname);
         fc.setText(w.gravity);
+        al.setText(w.age_18_21);
+        am.setText(w.age_22_25);
+        ah.setText(w.age_26_30);
 
         int mcNum = Integer.parseInt(w.nickname);
         int fcNum = Integer.parseInt(w.gravity);
