@@ -2,6 +2,7 @@ package com.cs121.project.trollie;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.Image;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -70,6 +71,9 @@ public class MyAdapter extends ArrayAdapter<ListElement> {
         TextView tv = (TextView) newView.findViewById(R.id.info_text);
         TextView mc = (TextView) newView.findViewById(R.id.maleCount);
         TextView fc = (TextView) newView.findViewById(R.id.femaleCount);
+        TextView alc = (TextView) newView.findViewById(R.id.ageLowCat);
+        TextView amc = (TextView) newView.findViewById(R.id.ageMedCat);
+        TextView ahc = (TextView) newView.findViewById(R.id.ageHighCat);
         TextView al = (TextView) newView.findViewById(R.id.ageLow);
         TextView am = (TextView) newView.findViewById(R.id.ageMed);
         TextView ah = (TextView) newView.findViewById(R.id.ageHigh);
@@ -87,6 +91,15 @@ public class MyAdapter extends ArrayAdapter<ListElement> {
         if ( (w.gravity) == null ) {
             w.gravity = "0";
         }
+        if ( (w.age_18_21) == null ) {
+            w.age_18_21 = "0";
+        }
+        if ( (w.age_22_25) == null ) {
+            w.age_22_25 = "0";
+        }
+        if ( (w.age_26_30) == null ) {
+            w.age_26_30 = "0";
+        }
 
         tv.setText(w.message);
         mc.setText(w.nickname);
@@ -95,8 +108,24 @@ public class MyAdapter extends ArrayAdapter<ListElement> {
         am.setText(w.age_22_25);
         ah.setText(w.age_26_30);
 
+        alc.setTextColor(Color.BLACK);
+        amc.setTextColor(Color.BLACK);
+        ahc.setTextColor(Color.BLACK);
+
         int mcNum = Integer.parseInt(w.nickname);
         int fcNum = Integer.parseInt(w.gravity);
+
+        int alNum = Integer.parseInt(w.age_18_21);
+        int amNum = Integer.parseInt(w.age_22_25);
+        int ahNum = Integer.parseInt(w.age_26_30);
+
+        if ( (alNum > amNum) && (alNum > ahNum) ) {
+            alc.setTextColor(Color.GREEN);
+        } else if ( (amNum > alNum) && (amNum > ahNum) ) {
+            amc.setTextColor(Color.GREEN);
+        } else if ( (ahNum > alNum) && (ahNum > amNum) ) {
+            ahc.setTextColor(Color.GREEN);
+        }
 
         if ( mcNum > fcNum ) {
             mi.setImageResource(R.drawable.male_user_green);
