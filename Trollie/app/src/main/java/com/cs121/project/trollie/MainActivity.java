@@ -381,7 +381,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clearUserArea() {
-        info.setText("You've Successfully Logge Out");
+        info.setText("You've Successfully Logged Out");
 //        profileImgView.setImageDrawable(null);
     }
 

@@ -73,6 +73,9 @@ public class MyAdapter extends ArrayAdapter<ListElement> {
         ImageView mi = (ImageView) newView.findViewById(R.id.maleIcon);
         ImageView fi = (ImageView) newView.findViewById(R.id.femaleIcon);
 
+        mi.setImageResource(R.drawable.male_user_grey);
+        fi.setImageResource(R.drawable.female_user_grey);
+
         if ( (w.nickname) == null ) {
             w.nickname = "0";
         }
